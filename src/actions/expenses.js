@@ -5,7 +5,6 @@ export const addExpense = (expense) => ({
   expense: expense
 });
 
-
 export const startAddExpense = (expenseData = {}) =>{  // we use this to basically return a function to the props which then dispatches the addExpense action with the returned data (or in this case, just the key)
   return (dispatch) => {  // creates an asyncronous action
     const {
@@ -40,3 +39,25 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+//SET_EXPENSES
+export const setExpenses = ((expenses)=> ({
+  type: 'SET_EXPENSES',
+  expenses
+})); // dispatched from startSetExpenses
+
+// export const startSetExpenses; // async
+export const startSetExpenses = () => {
+  return (dispatch)=>{ // returns a function to redux
+    return database.ref('expenses').once('value').then((snapshot)=>{ /// returns a promise
+      const expenses = [];
+      snapshot.forEach((child)=>{
+        expenses.push({
+          id: child.key,
+          ...child.val()
+        });
+      });
+      dispatch(setExpenses(expenses));
+    });
+}
+}

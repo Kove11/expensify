@@ -18,6 +18,8 @@ export default (state = expensesReducerDefState, action) => {  ///create a reduc
                     return expense;
                 }
             });
+        case 'SET_EXPENSES':
+            return action.expenses
         
         default:
             return state;
