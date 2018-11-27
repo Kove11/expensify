@@ -1,23 +1,22 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-if (process.env.NODE_ENV === 'test'){
-    require('dotenv').config({path: '.env.test'});
-} else if (process.env.NODE_ENV === 'development'){
-    require('dotenv').config({path: '.env.development'});
+if (process.env.NODE_ENV === 'test') {
+    require('dotenv').config({ path: '.env.test' });
+} else if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config({ path: '.env.development' });
 }
-module.exports = (env) =>{
+module.exports = (env) => {
     const isProduction = env === 'production'; // this is set in the package.json script with the --env production flag
     const CSSExtract = new ExtractTextPlugin('styles.css');
     return {
-        entry:"./src/app.js",
+        entry: ['babel-polyfill', './src/app.js'], // babel polyfill enables much better browser compatibility
         // entry:"./src/playground/add-array.js",
         output: {
-            path: path.join(__dirname,'public','dist'),
+            path: path.join(__dirname, 'public', 'dist'),
             filename: 'bundle.js'
         },
         module: {
@@ -43,7 +42,7 @@ module.exports = (env) =>{
                                     sourceMap: true
                                 }
                             }
-                            
+
                         ]
                     })
                 }
@@ -60,7 +59,7 @@ module.exports = (env) =>{
                 'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
             })
         ],
-        devtool: isProduction ?  'source-map' : 'inline-source-map',
+        devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             contentBase: path.join(__dirname, 'public'),
             publicPath: '/dist/',

@@ -1,0 +1,9 @@
+.DateRangePickerInput {
+    @media (max-width: $desktop_breakpoint) {
+        //When it's mobile size these styles will apply
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
