@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 

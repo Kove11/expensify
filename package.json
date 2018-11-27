@@ -29,6 +29,7 @@
     "express": "^4.15.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "firebase": "^4.2.0",
+    "history": "^4.7.2",
     "moment": "^2.18.1",
     "node-sass": "^4.5.3",
     "normalize.css": "^7.0.0",
@@ -51,12 +52,8 @@
     "webpack-merge": "^4.1.4"
   },
   "devDependencies": {
-    "cross-env": "^5.0.5",
-    "raf": "^3.3.2",
-    "webpack-dev-server": "2.5.1",
-    "react-test-renderer": "^16.0.0",
-    "jest": "^20.0.4",
     "babel-eslint": "^10.0.1",
+    "cross-env": "^5.0.5",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "enzyme-to-json": "^3.0.1",
@@ -64,6 +61,11 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^20.0.4",
+    "raf": "^3.3.2",
+    "react-test-renderer": "^16.0.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack-dev-server": "2.5.1"
   }
 }
