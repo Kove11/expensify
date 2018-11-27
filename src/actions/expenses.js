@@ -6,7 +6,8 @@ export const addExpense = (expense) => ({
 });
 
 export const startAddExpense = (expenseData = {}) =>{  // we use this to basically return a function to the props which then dispatches the addExpense action with the returned data (or in this case, just the key)
-  return (dispatch) => {  // creates an asyncronous action
+  return (dispatch, getState) => {  // creates an asyncronous action
+    const uid = getState().auth.uid;
     const {
       description = '',
       note = '',
@@ -19,7 +20,7 @@ export const startAddExpense = (expenseData = {}) =>{  // we use this to basical
       amount,
       createdAt
     };
-    return database.ref('expenses').push(expense).then((ref)=>{
+    return database.ref(`users/${uid}/expenses`).push(expense).then((ref)=>{
       dispatch(addExpense({
         id: ref.key,
         ...expense
@@ -35,8 +36,9 @@ export const removeExpense = ({ id } = {}) => ({
 
 // Remove expense from DB
 export const startRemoveExpense = ({id} = {}) =>{
-  return (dispatch) => {
-    return database.ref(`expenses/${id}`).remove().then(()=>{
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/expenses/${id}`).remove().then(()=>{
       dispatch(removeExpense({ id }));
     });
   }
@@ -50,8 +52,9 @@ export const editExpense = (id, updates) => ({
 
 //EDIT EXPENSE IN DB
 export const startEditExpense = (id,updates) =>{
-  return (dispatch) => {
-    return database.ref(`expenses/${id}`).update(updates).then(()=>{ ///returns a promise that can be chained off of
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(()=>{ ///returns a promise that can be chained off of
       dispatch(editExpense(id,updates));
     });
   }
@@ -65,8 +68,9 @@ export const setExpenses = ((expenses)=> ({
 
 // export const startSetExpenses; // async
 export const startSetExpenses = () => {
-  return (dispatch)=>{ // returns a function to redux
-    return database.ref('expenses').once('value').then((snapshot)=>{ /// returns a promise
+  return (dispatch, getState)=>{ // returns a function to redux
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/expenses`).once('value').then((snapshot)=>{ /// returns a promise
       const expenses = [];
       snapshot.forEach((child)=>{
         expenses.push({
